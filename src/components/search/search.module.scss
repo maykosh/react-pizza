@@ -1,0 +1,33 @@
+@import "../../scss/variables";
+.searchContainer {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 300px;
+   padding: 10px;
+   border-radius: 25px;
+   outline: none;
+   border: 1px solid $orange;
+   font-size: 16px;
+   letter-spacing: 1px;
+   font-family: sans-serif;
+   .input {
+      width: 100%;
+      height: 100%;
+      border: none;
+   }
+   .removeIcon {
+      font-size: 28px;
+      cursor: pointer;
+      color: $orange;
+   }
+   .removeIcon:active{
+    transform: scale(1.1);
+   }
+   .removeIcon:hover {
+    opacity: 0.6;
+   }
+   .isVisibility{
+      visibility:hidden;
+   }
+}

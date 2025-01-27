@@ -44,7 +44,7 @@ const Cart = ({ pizza }) => {
                <ul>
                   {pizza.types.map((idx, index) => (
                      <li
-                        onClick={() => onClickType(idx)}
+                        onClick={() => onClickType(index)}
                         key={idx}
                         className={activeType === index ? "active" : ""}
                      >

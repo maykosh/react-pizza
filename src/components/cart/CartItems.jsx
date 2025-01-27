@@ -1,7 +1,7 @@
 import React from "react";
 
 const CartItems = ({items, removeItem}) => {
-   // debugger
+
    return (
       <>
          <div class="cart__item">

@@ -10,7 +10,7 @@ const initialState = {
       type: "asc",
    },
    categoryId: 0,
-   currentPage: 1,
+   page: 1,
    searchValue: "",
 };
 
@@ -26,10 +26,13 @@ const sortSlice = createSlice({
          void (state.searchValue = action.payload),
       setFilters: (state, action) => {
          state.categoryId = Number(action.payload.categoryId);
-         state.currentPage = Number(action.payload.currentPage);
+         state.page = Number(action.payload.page);
          state.sort = action.payload.sort;
          state.ascDesc = action.payload.ascDesc;
       },
+      setPage: (state, action) => {
+         state.page = action.payload
+      }
    },
 });
 export const filterActions = sortSlice.actions;

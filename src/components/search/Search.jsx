@@ -26,7 +26,7 @@ const Search = () => {
 
    useEffect(() => {
       dispatch(filterAction.setSearchValue(debounced));
-   }, [dispatch, filterAction, debounced]);
+   }, [debounced]);
 
    return (
       <div className={scss.searchContainer}>

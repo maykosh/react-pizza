@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/slice/cart-slice";
+import { cartSelector } from "../../store/selectors/cartSelector";
 const pizzaCoverImage =
    "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg";
 const Cart = ({ pizza }) => {
@@ -12,7 +13,7 @@ const Cart = ({ pizza }) => {
 
    const typeName = ["тонкое", "традиционное"];
 
-   const { items } = useSelector((state) => state.cart);
+   const { items } = useSelector(cartSelector);
    const currentItemCount = items.find((item) => item.id === pizza.id)?.count;
    const dispatch = useDispatch();
    const cartAction = cartActions;

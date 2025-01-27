@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterActions } from "../../store/slice/filter-slice";
+import { filterSelector } from "../../store/selectors/filterSelector";
 
 export const lists = [
    {
@@ -31,7 +32,7 @@ const Sort = React.memo(() => {
    const [open, setOpen] = React.useState(false);
    const sortRef = React.useRef();
 
-   const { sort, ascDesc } = useSelector((state) => state.filter);
+   const { sort, ascDesc } = useSelector(filterSelector);
    const dispatch = useDispatch();
    const action = filterActions;
 

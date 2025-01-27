@@ -3,9 +3,10 @@ import Cart from "../cart/Cart";
 import CartSceleton from "../cart/CartSceleton";
 import NotFound from "../notFound/NotFound";
 import {  useSelector } from "react-redux";
+import { pizzaSelector } from "../../store/selectors/pizzaSelector";
 
 const Main = () => {
-   const { pizza, status } = useSelector((state) => state.pizza);
+   const { pizza, status } = useSelector(pizzaSelector);
 
    const sceleton = Array.from({ length: 5 }, (_, i) => i);
 

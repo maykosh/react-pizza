@@ -4,9 +4,10 @@ import CartItems from "../components/cart/CartItems";
 import CartEmpty from "../components/cart/CartEmpty";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../store/slice/cart-slice";
+import { cartSelector } from "../store/selectors/cartSelector";
 
 const CartPage = () => {
-   const { items, totalCount, totalPrice } = useSelector((state) => state.cart);
+   const { items, totalCount, totalPrice } = useSelector(cartSelector);
    const dispatch = useDispatch();
    const cartAction = cartActions;
 

@@ -8,14 +8,14 @@ import { fetchPizza } from "../store/slice/pizza-slice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { filterActions } from "../store/slice/filter-slice";
+import { filterSelector } from "../store/selectors/filterSelector";
 
 const Home = () => {
    const isFilter = React.useRef(false);
    const isMounted = React.useRef(false);
 
-   const { categoryId, sort, ascDesc, searchValue, page } = useSelector(
-      (state) => state.filter
-   );
+   const { categoryId, sort, ascDesc, searchValue, page } =
+      useSelector(filterSelector);
    const dispatch = useDispatch();
    const filterAction = filterActions;
 
@@ -56,7 +56,6 @@ const Home = () => {
          getPizza();
       }
       isFilter.current = false;
-
    }, [categoryId, sort, ascDesc, searchValue, page]);
 
    React.useEffect(() => {

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const CartPayment = ({totalCount, totalPrice}) => {
    return (
       <>
-         <div class="cart__bottom">
-            <div class="cart__bottom-details">
+         <div className="cart__bottom">
+            <div className="cart__bottom-details">
                <span>
                   Всего пицц: <b>{totalCount} шт.</b>
                </span>
@@ -13,10 +13,10 @@ const CartPayment = ({totalCount, totalPrice}) => {
                   Сумма заказа: <b>{totalPrice} ₽</b>
                </span>
             </div>
-            <div class="cart__bottom-buttons">
+            <div className="cart__bottom-buttons">
                <Link
                   to="/"
-                  class="button button--outline button--add go-back-btn"
+                  className="button button--outline button--add go-back-btn"
                >
                   <svg
                      width="8"
@@ -36,7 +36,7 @@ const CartPayment = ({totalCount, totalPrice}) => {
 
                   <span>Вернуться назад</span>
                </Link>
-               <div class="button pay-btn">
+               <div className="button pay-btn">
                   <span>Оплатить сейчас</span>
                </div>
             </div>

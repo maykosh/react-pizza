@@ -21,12 +21,12 @@ const CartPage = () => {
 
    return (
       <>
-         <div class="container container--cart">
+         <div className="container container--cart">
             {totalCount ? (
-               <div class="cart">
+               <div className="cart">
                   {/* cart-top */}
-                  <div class="cart__top">
-                     <h2 class="content__title">
+                  <div className="cart__top">
+                     <h2 className="content__title">
                         <svg
                            width="18"
                            height="18"
@@ -58,7 +58,7 @@ const CartPage = () => {
                         </svg>
                         Корзина
                      </h2>
-                     <div class="cart__clear">
+                     <div className="cart__clear">
                         <svg
                            width="20"
                            height="20"
@@ -100,7 +100,7 @@ const CartPage = () => {
                      </div>
                   </div>
                   {/* cart-items */}
-                  <div class="content__items">
+                  <div className="content__items">
                      {items.map((item) => (
                         <CartItems key={item.id} items={item} removeItem={removeItem}/>
                      ))}

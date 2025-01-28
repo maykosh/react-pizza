@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/slice/cart-slice";
 import { cartSelector } from "../../store/selectors/cartSelector";
-const pizzaCoverImage =
+const PizzaCoverImage =
    "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg";
 const Cart = ({ pizza }) => {
    const [activeType, setActiveType] = React.useState(0);
@@ -13,19 +13,26 @@ const Cart = ({ pizza }) => {
 
    const typeName = ["тонкое", "традиционное"];
 
+   const selectId =
+      pizza.title + pizza.sizes[activeSize] + typeName[activeType];
+
    const { items } = useSelector(cartSelector);
-   const currentItemCount = items.find((item) => item.id === pizza.id)?.count;
+   const currentItemCount = items.find(
+      (item) => item.selectTypes.selectId === selectId
+   )?.count;
    const dispatch = useDispatch();
    const cartAction = cartActions;
 
    const onClickAdd = () => {
       const item = {
-         id: pizza.id,
          title: pizza.title,
          price: pizza.price,
-         imageUrl: pizzaCoverImage,
-         type: typeName[activeType],
-         size: pizza.sizes[activeSize],
+         imageUrl: PizzaCoverImage,
+         selectTypes: {
+            selectId: selectId,
+            type: typeName[activeType],
+            size: pizza.sizes[activeSize],
+         },
       };
       dispatch(cartAction.addItem(item));
    };

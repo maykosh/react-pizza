@@ -1,7 +1,6 @@
 import React from "react";
 
-const CartItems = ({items, removeItem}) => {
-
+const CartItems = ({ items, removeItem, decrementItem, incrementItem }) => {
    return (
       <>
          <div className="cart__item">
@@ -14,10 +13,15 @@ const CartItems = ({items, removeItem}) => {
             </div>
             <div className="cart__item-info">
                <h3>{items.title}</h3>
-               <p>{items.type}, {items.size} см.</p>
+               <p>
+                  {items.selectTypes.type}, {items.selectTypes.size} см.
+               </p>
             </div>
             <div className="cart__item-count">
-               <div className="button button--outline button--circle cart__item-count-minus">
+               <div
+                  onClick={() => decrementItem(items)}
+                  className="button button--outline button--circle cart__item-count-minus"
+               >
                   <svg
                      width="10"
                      height="10"
@@ -36,7 +40,10 @@ const CartItems = ({items, removeItem}) => {
                   </svg>
                </div>
                <b>{items.count}</b>
-               <div className="button button--outline button--circle cart__item-count-plus">
+               <div
+                  onClick={() => incrementItem(items)}
+                  className="button button--outline button--circle cart__item-count-plus"
+               >
                   <svg
                      width="10"
                      height="10"
@@ -58,7 +65,10 @@ const CartItems = ({items, removeItem}) => {
             <div className="cart__item-price">
                <b>{items.price}</b>
             </div>
-            <div onClick={() =>removeItem(items.id)}  className="cart__item-remove">
+            <div
+               onClick={() => removeItem(items)}
+               className="cart__item-remove"
+            >
                <div className="button button--outline button--circle">
                   <svg
                      width="10"

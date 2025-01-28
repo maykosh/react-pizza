@@ -12,12 +12,20 @@ const CartPage = () => {
    const cartAction = cartActions;
 
    const clearCart = () => {
-      dispatch(cartAction.clearItems())
-   }
+      dispatch(cartAction.clearItems());
+   };
 
-   const removeItem = (id) => {
-      dispatch(cartAction.removeItem(id))
-   }
+   const removeItem = (item) => {
+      dispatch(cartAction.removeItem(item));
+   };
+
+   const decrementItem = (item) => {
+      dispatch(cartAction.decItem(item));
+   };
+
+   const incrementItem = (item) => {
+      dispatch(cartAction.addItem(item));
+   };
 
    return (
       <>
@@ -95,17 +103,25 @@ const CartPage = () => {
                               stroke-linejoin="round"
                            />
                         </svg>
-
                         <span onClick={clearCart}>Очистить корзину</span>
                      </div>
                   </div>
                   {/* cart-items */}
                   <div className="content__items">
                      {items.map((item) => (
-                        <CartItems key={item.id} items={item} removeItem={removeItem}/>
+                        <CartItems
+                           key={item.id}
+                           items={item}
+                           removeItem={removeItem}
+                           decrementItem={decrementItem}
+                           incrementItem={incrementItem}
+                        />
                      ))}
                   </div>
-                  <CartPayment totalCount={totalCount} totalPrice={totalPrice}/>
+                  <CartPayment
+                     totalCount={totalCount}
+                     totalPrice={totalPrice}
+                  />
                </div>
             ) : (
                <CartEmpty />

@@ -8,6 +8,7 @@ import AppLayout from "./components/layout/AppLayout";
 
 const App = () => {
    // https://6769335fcbf3d7cefd39f0b3.mockapi.io/pizza/v1/pizza
+// comment
 
    return (
       <Routes>

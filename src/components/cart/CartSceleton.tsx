@@ -1,11 +1,12 @@
 import React from "react";
-import ContentLoader from "react-content-loader";
+import ContentLoader, { IContentLoaderProps } from "react-content-loader";
+import { JSX } from "react/jsx-runtime";
 
-const CartSceleton = (props) => (
+const CartSceleton = (props: JSX.IntrinsicAttributes & IContentLoaderProps) => (
    <ContentLoader
       speed={1}
       width={300}
-      height={500}
+      height={500}   
       viewBox="0 0 300 500"
       backgroundColor="#ededed"
       foregroundColor="#cfcfcf"

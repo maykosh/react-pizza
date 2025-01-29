@@ -1,7 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getPizzas } from "../../api/api";
+import { IPizza } from "../type";
 
-export const fetchPizza = createAsyncThunk(
+interface IAsyncThunkArg {
+   category: number | string;
+   sortProperty: string;
+   type: string;
+   page: number;
+   limit: number;
+   search: string;
+}
+
+type StatusType = "success" | "loading" | "error";
+
+interface IPizzaSlice {
+   pizza: IPizza[];
+   status: StatusType;
+}
+
+// Типизация createAsyncThunk createAsyncThunk<Returned, ThunkArg, ThunkApiConfig>()
+export const fetchPizza = createAsyncThunk<IPizza[], IAsyncThunkArg>(
    "fetchPizza/pizza",
    async (params, ThunkApi) => {
       const { category, sortProperty, type, page, limit, search } = params;
@@ -19,22 +37,22 @@ export const fetchPizza = createAsyncThunk(
          }
          return data.data;
       } catch (error) {
-         return ThunkApi.rejectWithValue(error.message);
+         if (error instanceof Error) {
+            return ThunkApi.rejectWithValue(error.message);
+         }
       }
    }
 );
 
-const initialState = {
+const initialState: IPizzaSlice = {
    pizza: [],
-   status: "",
+   status: "loading",
 };
 
 const pizzaSlice = createSlice({
    name: "pizza",
    initialState,
-   reducers: {
-      setPizza: (state, action) => void (state.pizza = action.payload),
-   },
+   reducers: {},
    extraReducers: (builder) => {
       builder
          .addCase(fetchPizza.pending, (state) => {

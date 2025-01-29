@@ -2,12 +2,14 @@ import React from "react";
 import CartPayment from "../components/cart/CartPayment";
 import CartItems from "../components/cart/CartItems";
 import CartEmpty from "../components/cart/CartEmpty";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { cartActions } from "../store/slice/cart-slice";
 import { cartSelector } from "../store/selectors/cartSelector";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { ICartItem } from "../store/type";
 
 const CartPage = () => {
-   const { items, totalCount, totalPrice } = useSelector(cartSelector);
+   const { items, totalCount, totalPrice } = useAppSelector(cartSelector);
    const dispatch = useDispatch();
    const cartAction = cartActions;
 
@@ -15,15 +17,15 @@ const CartPage = () => {
       dispatch(cartAction.clearItems());
    };
 
-   const removeItem = (item) => {
+   const removeItem = (item: ICartItem) => {
       dispatch(cartAction.removeItem(item));
    };
 
-   const decrementItem = (item) => {
+   const decrementItem = (item: ICartItem) => {
       dispatch(cartAction.decItem(item));
    };
 
-   const incrementItem = (item) => {
+   const incrementItem = (item: ICartItem) => {
       dispatch(cartAction.addItem(item));
    };
 
@@ -110,7 +112,7 @@ const CartPage = () => {
                   <div className="content__items">
                      {items.map((item) => (
                         <CartItems
-                           key={item.id}
+                           key={item.selectTypes.selectId}
                            items={item}
                            removeItem={removeItem}
                            decrementItem={decrementItem}

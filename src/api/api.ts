@@ -6,12 +6,12 @@ const instance = axios.create({
 });
 
 export const getPizzas = async (
-   category,
-   sortProperty,
-   type,
-   page,
-   limit,
-   search
+   category: number | string,
+   sortProperty: string,
+   type: string,
+   page: number,
+   limit: number,
+   search: string
 ) => {
    const data = await instance.get(
       `?category=${category}&sortBy=${sortProperty}&order=${type}&page=${page}&limit=${limit}&search=${search}`

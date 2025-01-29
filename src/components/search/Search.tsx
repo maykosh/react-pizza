@@ -11,17 +11,17 @@ const Search = () => {
 
    const [search, setSearch] = React.useState("");
 
-   const inputRef = React.useRef();
+   const inputRef = React.useRef<HTMLInputElement>(null);
 
-   const debounced = useDebounce(search, 1000);
+   const debounced = useDebounce<string, number>(search, 1000);
 
-   const onChangeSearch = (e) => {
+   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value);
    };
 
    const onClickClear = () => {
       setSearch("");
-      inputRef.current.focus();
+      inputRef.current?.focus();
    };
 
    useEffect(() => {

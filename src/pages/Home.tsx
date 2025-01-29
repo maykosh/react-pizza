@@ -3,19 +3,21 @@ import Categories from "../components/categories/Categories";
 import Sort, { ascDescList, lists } from "../components/sort/Sort";
 import Main from "../components/main/Main";
 import Paginator from "../components/Paginator/Paginator";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchPizza } from "../store/slice/pizza-slice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { filterActions } from "../store/slice/filter-slice";
 import { filterSelector } from "../store/selectors/filterSelector";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { AscDescListType, ListType } from "../store/type";
 
 const Home = () => {
    const isFilter = React.useRef(false);
    const isMounted = React.useRef(false);
 
    const { categoryId, sort, ascDesc, searchValue, page } =
-      useSelector(filterSelector);
+      useAppSelector(filterSelector);
    const dispatch = useDispatch();
    const filterAction = filterActions;
 
@@ -23,8 +25,12 @@ const Home = () => {
 
    function getPizza() {
       dispatch(
+         // @ts-ignore
          fetchPizza({
-            category: categoryId > 0 ? categoryId : "",
+            category:
+               (typeof categoryId === "string" ? 0 : categoryId) > 0
+                  ? categoryId
+                  : "",
             sortProperty: sort.sortProperty,
             type: ascDesc.type,
             page: page,
@@ -37,10 +43,17 @@ const Home = () => {
    React.useEffect(() => {
       if (window.location.search) {
          const params = qs.parse(window.location.search.substring(1));
-         const sort = lists.find((list) => list.sortProperty === params.sortBy);
-         const ascDesc = ascDescList.find((list) => list.type === params.order);
+         const sort = lists.find(
+            (list) => list.sortProperty === params.sortBy
+         ) as ListType;
+         const ascDesc = ascDescList.find(
+            (list) => list.type === params.order
+         ) as AscDescListType;
          dispatch(
             filterAction.setFilters({
+               page: 0,
+               searchValue: "",
+               category: "",
                ...params,
                sort,
                ascDesc,
@@ -62,7 +75,10 @@ const Home = () => {
       if (isMounted.current) {
          const queryStr = qs.stringify({
             sortBy: sort.sortProperty,
-            categoryId,
+            category:
+               (typeof categoryId === "string" ? 0 : categoryId) > 0
+                  ? categoryId
+                  : "",
             page: page,
             order: ascDesc.type,
             limit: 4,

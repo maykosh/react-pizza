@@ -2,19 +2,24 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/slice/cart-slice";
 import { cartSelector } from "../../store/selectors/cartSelector";
+import { IPizza } from "../../store/type";
 const PizzaCoverImage =
    "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg";
-const Cart = ({ pizza }) => {
+
+interface Iprops {
+   item: IPizza;
+}
+
+const Cart: React.FC<Iprops> = ({ item }) => {
    const [activeType, setActiveType] = React.useState(0);
    const [activeSize, setActiveSize] = React.useState(0);
 
-   const onClickType = (index) => setActiveType(index);
-   const onClickSize = (index) => setActiveSize(index);
+   const onClickType = (index: number) => setActiveType(index);
+   const onClickSize = (index: number) => setActiveSize(index);
 
    const typeName = ["тонкое", "традиционное"];
 
-   const selectId =
-      pizza.title + pizza.sizes[activeSize] + typeName[activeType];
+   const selectId = item.title + item.sizes[activeSize] + typeName[activeType];
 
    const { items } = useSelector(cartSelector);
    const currentItemCount = items.find(
@@ -24,33 +29,32 @@ const Cart = ({ pizza }) => {
    const cartAction = cartActions;
 
    const onClickAdd = () => {
-      const item = {
-         title: pizza.title,
-         price: pizza.price,
+      const obj = {
+         title: item.title,
+         price: item.price,
          imageUrl: PizzaCoverImage,
          selectTypes: {
             selectId: selectId,
             type: typeName[activeType],
-            size: pizza.sizes[activeSize],
+            size: item.sizes[activeSize],
          },
+         count: 0,
       };
-      dispatch(cartAction.addItem(item));
+      dispatch(cartAction.addItem(obj));
    };
 
    return (
       <>
-         <div className="pizza-block" key={pizza.id}>
+         <div className="pizza-block" key={item.id}>
             <img
                className="pizza-block__image"
-               src={
-                  "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-               }
+               src={PizzaCoverImage}
                alt="Pizza"
             />
-            <h4 className="pizza-block__title">{pizza.title}</h4>
+            <h4 className="pizza-block__title">{item.title}</h4>
             <div className="pizza-block__selector">
                <ul>
-                  {pizza.types.map((idx, index) => (
+                  {item.types.map((idx, index) => (
                      <li
                         onClick={() => onClickType(index)}
                         key={idx}
@@ -61,7 +65,7 @@ const Cart = ({ pizza }) => {
                   ))}
                </ul>
                <ul>
-                  {pizza.sizes.map((size, index) => (
+                  {item.sizes.map((size, index) => (
                      <li
                         onClick={() => onClickSize(index)}
                         key={size}
@@ -73,7 +77,7 @@ const Cart = ({ pizza }) => {
                </ul>
             </div>
             <div className="pizza-block__bottom">
-               <div className="pizza-block__price">от {pizza.price} ₽</div>
+               <div className="pizza-block__price">от {item.price} ₽</div>
                <button
                   onClick={onClickAdd}
                   className="button button--outline button--add"

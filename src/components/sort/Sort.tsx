@@ -1,9 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterActions } from "../../store/slice/filter-slice";
 import { filterSelector } from "../../store/selectors/filterSelector";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { AscDescListType, ListType } from "../../store/type";
 
-export const lists = [
+export const lists: ListType[] = [
    {
       name: "популярности",
       sortProperty: "rating",
@@ -18,7 +20,7 @@ export const lists = [
    },
 ];
 
-export const ascDescList = [
+export const ascDescList: AscDescListType[] = [
    {
       name: "по убыванию",
       type: "desc",
@@ -30,24 +32,24 @@ export const ascDescList = [
 ];
 const Sort = React.memo(() => {
    const [open, setOpen] = React.useState(false);
-   const sortRef = React.useRef();
+   const sortRef = React.useRef<HTMLDivElement>(null);
 
-   const { sort, ascDesc } = useSelector(filterSelector);
+   const { sort, ascDesc } = useAppSelector(filterSelector);
    const dispatch = useDispatch();
    const action = filterActions;
 
-   const onClickSelectList = (list) => {
+   const onClickSelectList = (list: ListType) => {
       dispatch(action.setSort(list));
       setOpen(false);
    };
-   const onClickAscDescList = (list) => {
+   const onClickAscDescList = (list: AscDescListType) => {
       dispatch(action.setAscDesc(list));
       setOpen(false);
    };
 
    React.useEffect(() => {
-      const handleClick = (event) => {
-         if (!event.composedPath().includes(sortRef.current)) {
+      const handleClick = (event: MouseEvent) => {
+         if (!event.composedPath().includes(sortRef.current as Node)) {
             setOpen(false);
          }
       };

@@ -1,6 +1,14 @@
 import React from "react";
+import { ICartItem } from "../../store/type";
 
-const CartItems = ({ items, removeItem, decrementItem, incrementItem }) => {
+interface IProps {
+   items: ICartItem;
+   removeItem: (items: ICartItem) => void;
+   decrementItem: (items: ICartItem) => void;
+   incrementItem: (items: ICartItem) => void;
+}
+
+const CartItems: React.FC<IProps> = ({ items, removeItem, decrementItem, incrementItem }) => {
    return (
       <>
          <div className="cart__item">

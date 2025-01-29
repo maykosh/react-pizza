@@ -1,14 +1,15 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterActions } from "../../store/slice/filter-slice";
 import { filterSelector } from "../../store/selectors/filterSelector";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
-const Categories = () => {
-   const { categoryId } = useSelector(filterSelector);
+const Categories: React.FC = () => {
+   const { categoryId } = useAppSelector(filterSelector);
    const action = filterActions;
    const dispatch = useDispatch();
 
-   const categoryData = [
+   const categoryData: string[] = [
       "Все",
       "Мясные",
       "Вегетарианская",
@@ -17,7 +18,7 @@ const Categories = () => {
       "Закрытые",
    ];
 
-   const onClickCategory = (index) => {
+   const onClickCategory = (index: number) => {
       dispatch(action.setCategoryId(index));
    };
 

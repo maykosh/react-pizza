@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const CartPayment = ({totalCount, totalPrice}) => {
+type PropsType = { totalCount: number; totalPrice: number };
+const CartPayment: React.FC<PropsType> = ({ totalCount, totalPrice }) => {
    return (
       <>
          <div className="cart__bottom">

@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { calculatePriceAndCount } from "../../utils/calculator";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { updatePriceAndCound } from "../../utils/calculator";
+import { ICartItem, IItem } from "../type";
 
-const initialState = {
+const initialState: IItem = {
    totalPrice: 0,
    items: [],
    totalCount: 0,
@@ -11,7 +12,7 @@ const cartSlice = createSlice({
    name: "cart",
    initialState,
    reducers: {
-      addItem: (state, action) => {
+      addItem: (state, action: PayloadAction<ICartItem>) => {
          const currentId = action.payload.selectTypes.selectId;
          const findItem = state.items.find(
             (obj) => obj.selectTypes.selectId === currentId
@@ -24,36 +25,35 @@ const cartSlice = createSlice({
                count: 1,
             });
          }
-         state.totalPrice = calculatePriceAndCount(state.items).totalPrice;
-         state.totalCount = calculatePriceAndCount(state.items).totalCount;
+         updatePriceAndCound(state);
       },
-      removeItem: (state, action) => {
+      removeItem: (state, action: PayloadAction<ICartItem>) => {
          state.items = state.items.filter(
             (obj) =>
                obj.selectTypes.selectId !== action.payload.selectTypes.selectId
          );
-         state.totalPrice = calculatePriceAndCount(state.items).totalPrice;
-         state.totalCount = calculatePriceAndCount(state.items).totalCount;
+         updatePriceAndCound(state);
       },
       clearItems: (state) => {
          state.items = [];
          state.totalCount = 0;
          state.totalPrice = 0;
       },
-      decItem: (state, action) => {
+      decItem: (state, action: PayloadAction<ICartItem>) => {
          const currentId = action.payload.selectTypes.selectId;
          const findItem = state.items.find(
             (obj) => obj.selectTypes.selectId === currentId
          );
-         if (findItem.count === 1) {
-            state.items = state.items.filter(
-               (obj) => obj.selectTypes.selectId !== currentId
-            );
-         } else {
-            findItem.count--;
+         if (findItem) {
+            if (findItem.count === 1) {
+               state.items = state.items.filter(
+                  (obj) => obj.selectTypes.selectId !== currentId
+               );
+            } else {
+               findItem.count--;
+            }
          }
-         state.totalPrice = calculatePriceAndCount(state.items).totalPrice;
-         state.totalCount = calculatePriceAndCount(state.items).totalCount;
+         updatePriceAndCound(state);
       },
    },
 });

@@ -2,15 +2,15 @@ import React from "react";
 import CartPayment from "../components/cart/CartPayment";
 import CartItems from "../components/cart/CartItems";
 import CartEmpty from "../components/cart/CartEmpty";
-import { useDispatch } from "react-redux";
 import { cartActions } from "../store/slice/cart-slice";
 import { cartSelector } from "../store/selectors/cartSelector";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { ICartItem } from "../store/type";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 
 const CartPage = () => {
    const { items, totalCount, totalPrice } = useAppSelector(cartSelector);
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const cartAction = cartActions;
 
    const clearCart = () => {

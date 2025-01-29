@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from "react";
 import scss from "./paginator.module.scss";
-import { useDispatch } from "react-redux";
 import { filterActions } from "../../store/slice/filter-slice";
 import { filterSelector } from "../../store/selectors/filterSelector";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 const Paginator = () => {
    const { page: currentPage } = useAppSelector( filterSelector);
    const filterAction = filterActions;
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
 
    const onPageChange = (page:number) => {
       dispatch(filterAction.setPage(page));

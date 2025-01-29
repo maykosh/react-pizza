@@ -19,6 +19,7 @@ export interface ICartItem {
       size: number;
    };
    count: number;
+   incDecPrice: number;
 }
 
 export interface IItem {

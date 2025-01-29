@@ -1,13 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { filterActions } from "../../store/slice/filter-slice";
-import { filterSelector } from "../../store/selectors/filterSelector";
-import { useAppSelector } from "../../hooks/useAppSelector";
 
-const Categories: React.FC = () => {
-   const { categoryId } = useAppSelector(filterSelector);
-   const action = filterActions;
-   const dispatch = useDispatch();
+interface IProps {
+   onClickCategory: (index: number) => void;
+   categoryId: number | string;
+}
+
+const Categories: React.FC<IProps> = React.memo(({categoryId,onClickCategory}) => {
+ 
 
    const categoryData: string[] = [
       "Все",
@@ -17,10 +16,6 @@ const Categories: React.FC = () => {
       "Острые",
       "Закрытые",
    ];
-
-   const onClickCategory = (index: number) => {
-      dispatch(action.setCategoryId(index));
-   };
 
    return (
       <>
@@ -39,6 +34,6 @@ const Categories: React.FC = () => {
          </div>
       </>
    );
-};
+});
 
 export default Categories;

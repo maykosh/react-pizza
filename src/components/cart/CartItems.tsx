@@ -71,7 +71,7 @@ const CartItems: React.FC<IProps> = ({ items, removeItem, decrementItem, increme
                </div>
             </div>
             <div className="cart__item-price">
-               <b>{items.price}</b>
+               <b>{items.incDecPrice} ₽</b>
             </div>
             <div
                onClick={() => removeItem(items)}
@@ -99,6 +99,6 @@ const CartItems: React.FC<IProps> = ({ items, removeItem, decrementItem, increme
          </div>
       </>
    );
-};
+}; 
 
 export default CartItems;

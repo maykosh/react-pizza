@@ -4,49 +4,46 @@ import { IPizza } from "../type";
 
 interface IAsyncThunkArg {
    category: number | string;
-   sortProperty: string;
-   type: string;
+   sortBy: string;
+   order: string;
    page: number;
    limit: number;
    search: string;
 }
 
-type StatusType = "success" | "loading" | "error";
+export enum Status {
+   SUCCESS = "success",
+   LOADING = "loading",
+   ERROR = "error",
+}
 
 interface IPizzaSlice {
    pizza: IPizza[];
-   status: StatusType;
+   status: Status;
 }
 
 // Типизация createAsyncThunk createAsyncThunk<Returned, ThunkArg, ThunkApiConfig>()
 export const fetchPizza = createAsyncThunk<IPizza[], IAsyncThunkArg>(
    "fetchPizza/pizza",
    async (params, ThunkApi) => {
-      const { category, sortProperty, type, page, limit, search } = params;
+      // const { category, sortProperty, type, page, limit, search } = params;
       try {
-         const data = await getPizzas(
-            category,
-            sortProperty,
-            type,
-            page,
-            limit,
-            search
-         );
+         const data = await getPizzas(params);
          if (data.status !== 200) {
             throw new Error("network error");
          }
          return data.data;
       } catch (error) {
-         if (error instanceof Error) {
-            return ThunkApi.rejectWithValue(error.message);
-         }
+         return ThunkApi.rejectWithValue(
+            error instanceof Error ? error.message : "Unknown error"
+         );
       }
    }
 );
 
 const initialState: IPizzaSlice = {
    pizza: [],
-   status: "loading",
+   status: Status.LOADING,
 };
 
 const pizzaSlice = createSlice({
@@ -56,15 +53,15 @@ const pizzaSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(fetchPizza.pending, (state) => {
-            state.status = "loading";
+            state.status = Status.LOADING;
             state.pizza = [];
          })
          .addCase(fetchPizza.fulfilled, (state, action) => {
             state.pizza = action.payload;
-            state.status = "success";
+            state.status = Status.SUCCESS;
          })
          .addCase(fetchPizza.rejected, (state) => {
-            state.status = "error";
+            state.status = Status.ERROR;
             state.pizza = [];
          });
    },

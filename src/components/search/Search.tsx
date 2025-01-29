@@ -2,12 +2,12 @@ import { CiCircleRemove } from "react-icons/ci";
 import React, { useEffect } from "react";
 import scss from "./search.module.scss";
 import { filterActions } from "../../store/slice/filter-slice";
-import { useDispatch } from "react-redux";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-const Search = () => {
+const Search = React.memo(() => {
    const filterAction = filterActions;
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
 
    const [search, setSearch] = React.useState("");
 
@@ -45,6 +45,6 @@ const Search = () => {
          />
       </div>
    );
-};
+});
 
 export default Search;

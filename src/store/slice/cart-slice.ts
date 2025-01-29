@@ -19,6 +19,7 @@ const cartSlice = createSlice({
          );
          if (findItem) {
             findItem.count++;
+            findItem.incDecPrice += findItem.price;
          } else {
             state.items.push({
                ...action.payload,
@@ -51,6 +52,7 @@ const cartSlice = createSlice({
                );
             } else {
                findItem.count--;
+               findItem.incDecPrice -= findItem.price;
             }
          }
          updatePriceAndCound(state);

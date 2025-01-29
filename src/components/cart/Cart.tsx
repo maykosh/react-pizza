@@ -1,8 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/slice/cart-slice";
 import { cartSelector } from "../../store/selectors/cartSelector";
 import { IPizza } from "../../store/type";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 const PizzaCoverImage =
    "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg";
 
@@ -21,13 +22,13 @@ const Cart: React.FC<Iprops> = ({ item }) => {
 
    const selectId = item.title + item.sizes[activeSize] + typeName[activeType];
 
-   const { items } = useSelector(cartSelector);
+   const { items } = useAppSelector(cartSelector);
    const currentItemCount = items.find(
       (item) => item.selectTypes.selectId === selectId
-   )?.count;
-   const dispatch = useDispatch();
+   )?.count;   
+   const dispatch = useAppDispatch();
    const cartAction = cartActions;
-
+ 
    const onClickAdd = () => {
       const obj = {
          title: item.title,
@@ -39,9 +40,10 @@ const Cart: React.FC<Iprops> = ({ item }) => {
             size: item.sizes[activeSize],
          },
          count: 0,
+         incDecPrice: item.price,
       };
       dispatch(cartAction.addItem(obj));
-   };
+   }
 
    return (
       <>

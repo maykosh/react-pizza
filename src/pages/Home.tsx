@@ -3,7 +3,6 @@ import Categories from "../components/categories/Categories";
 import Sort, { ascDescList, lists } from "../components/sort/Sort";
 import Main from "../components/main/Main";
 import Paginator from "../components/Paginator/Paginator";
-import { useDispatch } from "react-redux";
 import { fetchPizza } from "../store/slice/pizza-slice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +10,7 @@ import { filterActions } from "../store/slice/filter-slice";
 import { filterSelector } from "../store/selectors/filterSelector";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { AscDescListType, ListType } from "../store/type";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 
 const Home = () => {
    const isFilter = React.useRef(false);
@@ -18,21 +18,25 @@ const Home = () => {
 
    const { categoryId, sort, ascDesc, searchValue, page } =
       useAppSelector(filterSelector);
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const filterAction = filterActions;
 
    const navigate = useNavigate();
 
+   const onClickCategory = React.useCallback((index: number) => {
+      dispatch(filterAction.setCategoryId(index));
+   }, []);
+
+   
    function getPizza() {
       dispatch(
-         // @ts-ignore
          fetchPizza({
             category:
                (typeof categoryId === "string" ? 0 : categoryId) > 0
                   ? categoryId
                   : "",
-            sortProperty: sort.sortProperty,
-            type: ascDesc.type,
+            sortBy: sort.sortProperty,
+            order: ascDesc.type,
             page: page,
             limit: 4,
             search: searchValue,
@@ -91,8 +95,8 @@ const Home = () => {
    return (
       <div className="container">
          <div className="content__top">
-            <Categories />
-            <Sort />
+            <Categories onClickCategory={onClickCategory} categoryId={categoryId}/>
+            <Sort sort={sort} ascDesc={ascDesc}/>
          </div>
          <Main />
          <Paginator />

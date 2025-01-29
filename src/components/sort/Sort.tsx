@@ -1,9 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { filterActions } from "../../store/slice/filter-slice";
-import { filterSelector } from "../../store/selectors/filterSelector";
-import { useAppSelector } from "../../hooks/useAppSelector";
 import { AscDescListType, ListType } from "../../store/type";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+
+interface IProps {
+   sort: ListType;
+   ascDesc: AscDescListType;
+}
 
 export const lists: ListType[] = [
    {
@@ -30,12 +33,11 @@ export const ascDescList: AscDescListType[] = [
       type: "asc",
    },
 ];
-const Sort = React.memo(() => {
+const Sort: React.FC<IProps> = React.memo(({ ascDesc, sort }) => {
    const [open, setOpen] = React.useState(false);
    const sortRef = React.useRef<HTMLDivElement>(null);
 
-   const { sort, ascDesc } = useAppSelector(filterSelector);
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const action = filterActions;
 
    const onClickSelectList = (list: ListType) => {

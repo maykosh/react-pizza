@@ -8,7 +8,7 @@ import { useAppSelector } from "../hooks/useAppSelector";
 import { ICartItem } from "../store/type";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 
-const CartPage = () => {
+const CartPage: React.FC = () => {
    const { items, totalCount, totalPrice } = useAppSelector(cartSelector);
    const dispatch = useAppDispatch();
    const cartAction = cartActions;

@@ -11,9 +11,11 @@ interface Iprops {
    item: IPizza;
 }
 
-const Cart: React.FC<Iprops> = ({ item }) => {
+const Cart: React.FC<Iprops> = React.memo(({ item }) => {
    const [activeType, setActiveType] = React.useState(0);
    const [activeSize, setActiveSize] = React.useState(0);
+
+   // const isMounted = React.useRef<boolean>(false);
 
    const onClickType = (index: number) => setActiveType(index);
    const onClickSize = (index: number) => setActiveSize(index);
@@ -25,10 +27,11 @@ const Cart: React.FC<Iprops> = ({ item }) => {
    const { items } = useAppSelector(cartSelector);
    const currentItemCount = items.find(
       (item) => item.selectTypes.selectId === selectId
-   )?.count;   
+   )?.count;
+
    const dispatch = useAppDispatch();
    const cartAction = cartActions;
- 
+
    const onClickAdd = () => {
       const obj = {
          title: item.title,
@@ -43,8 +46,11 @@ const Cart: React.FC<Iprops> = ({ item }) => {
          incDecPrice: item.price,
       };
       dispatch(cartAction.addItem(obj));
-   }
-
+   };
+   // React.useEffect(() => {
+   //    if (isMounted) localStorage.setItem("cartItems", JSON.stringify(items));
+   //    isMounted.current = true;
+   // }, [items]);
    return (
       <>
          <div className="pizza-block" key={item.id}>
@@ -103,6 +109,6 @@ const Cart: React.FC<Iprops> = ({ item }) => {
          </div>
       </>
    );
-};
+});
 
 export default Cart;

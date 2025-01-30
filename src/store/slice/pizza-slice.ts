@@ -26,7 +26,6 @@ interface IPizzaSlice {
 export const fetchPizza = createAsyncThunk<IPizza[], IAsyncThunkArg>(
    "fetchPizza/pizza",
    async (params, ThunkApi) => {
-      // const { category, sortProperty, type, page, limit, search } = params;
       try {
          const data = await getPizzas(params);
          if (data.status !== 200) {

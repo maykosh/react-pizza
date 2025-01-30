@@ -11,11 +11,13 @@ import { filterSelector } from "../store/selectors/filterSelector";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { AscDescListType, ListType } from "../store/type";
 import { useAppDispatch } from "../hooks/useAppDispatch";
+import { pizzaSelector } from "../store/selectors/pizzaSelector";
 
 const Home = () => {
    const isFilter = React.useRef(false);
    const isMounted = React.useRef(false);
 
+   const { pizza, status } = useAppSelector(pizzaSelector);
    const { categoryId, sort, ascDesc, searchValue, page } =
       useAppSelector(filterSelector);
    const dispatch = useAppDispatch();
@@ -27,8 +29,7 @@ const Home = () => {
       dispatch(filterAction.setCategoryId(index));
    }, []);
 
-   
-   function getPizza() {
+   const getPizza = () => {
       dispatch(
          fetchPizza({
             category:
@@ -42,7 +43,24 @@ const Home = () => {
             search: searchValue,
          })
       );
-   }
+   };
+
+   React.useEffect(() => {
+      if (isMounted.current) {
+         const queryStr = qs.stringify({
+            sortBy: sort.sortProperty,
+            category:
+               (typeof categoryId === "string" ? 0 : categoryId) > 0
+                  ? categoryId
+                  : "",
+            page: page,
+            order: ascDesc.type,
+            limit: 4,
+         });
+         navigate(`?${queryStr}`);
+      }
+      isMounted.current = true;
+   }, [ascDesc.type, categoryId, page, navigate, sort.sortProperty]);
 
    React.useEffect(() => {
       if (window.location.search) {
@@ -75,30 +93,16 @@ const Home = () => {
       isFilter.current = false;
    }, [categoryId, sort, ascDesc, searchValue, page]);
 
-   React.useEffect(() => {
-      if (isMounted.current) {
-         const queryStr = qs.stringify({
-            sortBy: sort.sortProperty,
-            category:
-               (typeof categoryId === "string" ? 0 : categoryId) > 0
-                  ? categoryId
-                  : "",
-            page: page,
-            order: ascDesc.type,
-            limit: 4,
-         });
-         navigate(`?${queryStr}`);
-      }
-      isMounted.current = true;
-   }, [ascDesc.type, categoryId, page, navigate, sort.sortProperty]);
-
    return (
       <div className="container">
          <div className="content__top">
-            <Categories onClickCategory={onClickCategory} categoryId={categoryId}/>
-            <Sort sort={sort} ascDesc={ascDesc}/>
+            <Categories
+               onClickCategory={onClickCategory}
+               categoryId={categoryId}
+            />
+            <Sort sort={sort} ascDesc={ascDesc} />
          </div>
-         <Main />
+         <Main pizza={pizza} status={status} />
          <Paginator />
       </div>
    );

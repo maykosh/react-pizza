@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { persistor, store } from "./store/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const divPortal = document.getElementById("root");
 if (!divPortal) {
@@ -13,9 +14,10 @@ if (!divPortal) {
 const root = ReactDOM.createRoot(divPortal);
 root.render(
    <Provider store={store}>
-      <BrowserRouter>
-         <App />
-      </BrowserRouter>
+      <PersistGate persistor={persistor} loading={null}>
+         <BrowserRouter>
+            <App />
+         </BrowserRouter>
+      </PersistGate>
    </Provider>
 );
-

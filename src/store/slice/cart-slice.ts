@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { updatePriceAndCound } from "../../utils/calculator";
 import { ICartItem, IItem } from "../type";
-
 const initialState: IItem = {
    totalPrice: 0,
    items: [],

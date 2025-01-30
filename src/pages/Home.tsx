@@ -3,7 +3,6 @@ import Categories from "../components/categories/Categories";
 import Sort, { ascDescList, lists } from "../components/sort/Sort";
 import Main from "../components/main/Main";
 import Paginator from "../components/Paginator/Paginator";
-import { fetchPizza } from "../store/pizzaSlice/pizza-slice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { filterActions } from "../store/filterSlice/filter-slice";
@@ -12,6 +11,7 @@ import { useAppSelector } from "../hooks/useAppSelector";
 import { AscDescListType, ListType } from "../store/type";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { pizzaSelector } from "../store/pizzaSlice/pizzaSelector";
+import { getPizzaThunk } from "../store/asyncActions/getPizzaThunk";
 
 const Home = () => {
    const isFilter = React.useRef(false);
@@ -31,7 +31,7 @@ const Home = () => {
 
    const getPizza = () => {
       dispatch(
-         fetchPizza({
+         getPizzaThunk({
             category:
                (typeof categoryId === "string" ? 0 : categoryId) > 0
                   ? categoryId

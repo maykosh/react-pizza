@@ -1,15 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getPizzas } from "../../api/api";
+import { createSlice } from "@reduxjs/toolkit";
 import { IPizza } from "../type";
-
-interface IAsyncThunkArg {
-   category: number | string;
-   sortBy: string;
-   order: string;
-   page: number;
-   limit: number;
-   search: string;
-}
+import { getPizzaThunk } from "../asyncActions/getPizzaThunk";
 
 export enum Status {
    SUCCESS = "success",
@@ -22,24 +13,6 @@ interface IPizzaSlice {
    status: Status;
 }
 
-// Типизация createAsyncThunk createAsyncThunk<Returned, ThunkArg, ThunkApiConfig>()
-export const fetchPizza = createAsyncThunk<IPizza[], IAsyncThunkArg>(
-   "fetchPizza/pizza",
-   async (params, ThunkApi) => {
-      try {
-         const data = await getPizzas(params);
-         if (data.status !== 200) {
-            throw new Error("network error");
-         }
-         return data.data;
-      } catch (error) {
-         return ThunkApi.rejectWithValue(
-            error instanceof Error ? error.message : "Unknown error"
-         );
-      }
-   }
-);
-
 const initialState: IPizzaSlice = {
    pizza: [],
    status: Status.LOADING,
@@ -51,15 +24,15 @@ const pizzaSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder
-         .addCase(fetchPizza.pending, (state) => {
+         .addCase(getPizzaThunk.pending, (state) => {
             state.status = Status.LOADING;
             state.pizza = [];
          })
-         .addCase(fetchPizza.fulfilled, (state, action) => {
+         .addCase(getPizzaThunk.fulfilled, (state, action) => {
             state.pizza = action.payload;
             state.status = Status.SUCCESS;
          })
-         .addCase(fetchPizza.rejected, (state) => {
+         .addCase(getPizzaThunk.rejected, (state) => {
             state.status = Status.ERROR;
             state.pizza = [];
          });

@@ -1,7 +1,7 @@
 import { CiCircleRemove } from "react-icons/ci";
 import React, { useEffect } from "react";
 import scss from "./search.module.scss";
-import { filterActions } from "../../store/slice/filter-slice";
+import { filterActions } from "../../store/filterSlice/filter-slice";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 

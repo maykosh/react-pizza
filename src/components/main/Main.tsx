@@ -3,7 +3,7 @@ import Cart from "../cart/Cart";
 import CartSceleton from "../cart/CartSceleton";
 import NotFound from "../notFound/NotFound";
 import { IPizza } from "../../store/type";
-import { Status } from "../../store/slice/pizza-slice";
+import { Status } from "../../store/pizzaSlice/pizza-slice";
 interface IProps {
    pizza: IPizza[];
    status: Status;

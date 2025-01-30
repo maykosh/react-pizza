@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { sortReducer } from "./slice/filter-slice";
-import { pizzaReducer } from "./slice/pizza-slice";
-import { cartReducer } from "./slice/cart-slice";
+import { sortReducer } from "./filterSlice/filter-slice";
+import { pizzaReducer } from "./pizzaSlice/pizza-slice";
+import { cartReducer } from "./cartSlice/cart-slice";
 import { PersistConfig, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 

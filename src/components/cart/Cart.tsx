@@ -1,6 +1,6 @@
 import React from "react";
-import { cartActions } from "../../store/slice/cart-slice";
-import { cartSelector } from "../../store/selectors/cartSelector";
+import { cartActions } from "../../store/cartSlice/cart-slice";
+import { cartSelector } from "../../store/cartSlice/cartSelector";
 import { IPizza } from "../../store/type";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";

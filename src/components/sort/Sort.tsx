@@ -1,5 +1,5 @@
 import React from "react";
-import { filterActions } from "../../store/slice/filter-slice";
+import { filterActions } from "../../store/filterSlice/filter-slice";
 import { AscDescListType, ListType } from "../../store/type";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 

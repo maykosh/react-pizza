@@ -2,7 +2,7 @@ import React from "react";
 import pizzaLogo from "../../assets/img/pizza-logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import Search from "../search/Search";
-import { cartSelector } from "../../store/selectors/cartSelector";
+import { cartSelector } from "../../store/cartSlice/cartSelector";
 import { useAppSelector } from "../../hooks/useAppSelector";
 const Header: React.FC = () => {
    const { totalPrice, totalCount } = useAppSelector(cartSelector);
@@ -62,6 +62,6 @@ const Header: React.FC = () => {
          </div>
       </>
    );
-}
+};
 
 export default Header;

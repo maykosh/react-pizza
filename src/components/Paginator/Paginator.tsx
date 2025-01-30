@@ -1,19 +1,19 @@
 import React, { useMemo, useState } from "react";
 import scss from "./paginator.module.scss";
-import { filterActions } from "../../store/slice/filter-slice";
-import { filterSelector } from "../../store/selectors/filterSelector";
+import { filterActions } from "../../store/filterSlice/filter-slice";
+import { filterSelector } from "../../store/filterSlice/filterSelector";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 const Paginator = () => {
-   const { page: currentPage } = useAppSelector( filterSelector);
+   const { page: currentPage } = useAppSelector(filterSelector);
    const filterAction = filterActions;
    const dispatch = useAppDispatch();
 
-   const onPageChange = (page:number) => {
+   const onPageChange = (page: number) => {
       dispatch(filterAction.setPage(page));
    };
-   
+
    const [currentPortion, setCurrentPortion] = useState(1);
    let totalPages = 3;
    let portionSize = 3;

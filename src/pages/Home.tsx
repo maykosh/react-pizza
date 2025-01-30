@@ -3,15 +3,15 @@ import Categories from "../components/categories/Categories";
 import Sort, { ascDescList, lists } from "../components/sort/Sort";
 import Main from "../components/main/Main";
 import Paginator from "../components/Paginator/Paginator";
-import { fetchPizza } from "../store/slice/pizza-slice";
+import { fetchPizza } from "../store/pizzaSlice/pizza-slice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { filterActions } from "../store/slice/filter-slice";
-import { filterSelector } from "../store/selectors/filterSelector";
+import { filterActions } from "../store/filterSlice/filter-slice";
+import { filterSelector } from "../store/filterSlice/filterSelector";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { AscDescListType, ListType } from "../store/type";
 import { useAppDispatch } from "../hooks/useAppDispatch";
-import { pizzaSelector } from "../store/selectors/pizzaSelector";
+import { pizzaSelector } from "../store/pizzaSlice/pizzaSelector";
 
 const Home = () => {
    const isFilter = React.useRef(false);

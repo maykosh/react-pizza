@@ -1,5 +1,4 @@
 import axios from "axios";
-// `?category=${category}&sortBy=${sortProperty}&order=${type}&page=${page}&limit=${limit}&search=${search}`
 
 interface IParams {
    category: number | string;

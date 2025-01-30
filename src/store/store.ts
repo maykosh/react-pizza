@@ -16,6 +16,7 @@ const cartItemPersistConfig: PersistConfig<RootState> = {
    storage,
    whitelist: ["cart"] as (keyof RootState)[],
 };
+
 const persistedReducer = persistReducer(cartItemPersistConfig, combineReducer);
 
 export const store = configureStore({
